@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <title>GV Cinema</title>
+        
+        <script>
+            function filterMovies() {
+                const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                const movies = document.querySelectorAll('.movie');
+
+                movies.forEach(movie => {
+                    const movieName = movie.querySelector('.title').textContent.toLowerCase();
+                    if (movieName.includes(searchInput)) {
+                        movie.style.display = 'block';  // Show movie if name includes search query
+                    } else {
+                        movie.style.display = 'none';   // Hide movie if name does not include search query
+                    }
+                }
+                );
+            }
+
+            // Event listener for search input
+            // Function to submit the search form when Enter is pressed
+            document.getElementById('searchInput').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent default form submission
+                    document.getElementById('searchForm').submit(); // Submit the form
+                }
+            });
+
+        
+        </script>
+        
+        <style>
+            a {
+                color: black;
+                text-decoration: none;
+            }
+            .list-movie {
+                display: grid;
+                grid-template-columns: 25% 25% 25% 25%;
+            }
+            .movie {
+                display: grid;
+                grid-template-rows: auto auto auto auto;
+                height: 100%;
+                width: 100%;
+            }
+            .centered-img {
+                width: 80%;
+                height: 500px;
+            }
+            .title {
+                margin-right: 20%;
+            }
+            .duration {
+                color: grey;
+            }
+            .rating {
+                color: grey;
+            }
+            h1 {
+            margin-top: 0%;
+            margin-bottom: 0%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 50px;
+            }
+            h2 {
+            margin-top: 0%;
+            margin-bottom: 1%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 40px;
+            }
+            h3 {
+            margin-top: 0%;
+            margin-bottom: 2%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 30px;
+            }
+            h4 {
+            margin-top: 0%;
+            margin-bottom: 0%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            }
+            h5 {
+            margin-top: 20%;
+            margin-bottom: 10%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="header">
+                <h1>Movie Listing @ GV Cinema</h1>
+            </div>
+            <div class="search">
+                <form id="searchForm" action="{% url 'search_results' %}" method="GET">
+                    <input type="text" id="searchInput" name="query" placeholder="Search movies...">
+                </form>
+            </div>
+            
+            <h2>Popular Movies this month</h2>
+            <div class="list-movie">
+                {% for movie in movies %}
+                    <a href="{% url 'movie_detail' movie.id %}">    
+                        <div class="movie">
+                            <div>
+                                <!-- <img src="{% static '{{ movie.imgPath }}' %}" alt="{{ movie.name }}" class="centered-img"> -->
+                                <img src="{% static movie.imgPath %}" alt="{{ movie.name }}" class="centered-img">
+
+                                <!-- <img src="..\assets\images\findingmrright.jpg" alt=""> -->
+                            </div>
+                            <div>
+                                <h3 class="title">{{ movie.name }}</h3>
+                                <h4 class="duration">{{ movie.duration }} min</h4>
+                            </div>
+                            <div>
+                                <h5 class="rating">User Rating: {{ movie.userRating }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

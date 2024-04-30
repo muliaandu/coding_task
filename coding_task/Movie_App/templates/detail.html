@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GV Cinema</title>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function goToListing() {
+                window.location.href = "{% url 'movie_list' %}";
+            }
+
+    </script>
+    <style>
+        .header {}
+        .back-button-division {}
+        .back-button {
+            cursor: pointer;
+        }
+        button {
+            background-color: white;
+            border: 1px solid grey;
+        }
+        .movie-detail-title {}
+        .movie-detail-isi {
+            border-top: 1px dotted grey;
+            padding-top: 15px;
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+        .image {
+            height: 500px;
+            width: 100%;
+        }
+        .detail {
+            padding-left: 5%;
+            padding-right: 20%;
+        }
+              
+        h1 {
+            margin-top: 0%;
+            margin-bottom: 0%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 50px;
+        }
+        h2 {
+            margin-top: 0%;
+            margin-bottom: 0%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 40px;
+        }
+        h3 {
+            margin-top: 0%;
+            margin-bottom: 2%;
+            margin-left: 0%;
+            margin-right: 0%;
+            font-size: 30px;
+        }
+        h4 {
+            font-weight: lighter;
+            margin-top: 0%;
+            margin-bottom: 2%;
+            margin-left: 0% ;
+            margin-right: 0%;
+            font-size: 20px;
+        }
+        .mpaa-rating {
+            margin-bottom: 1%;
+            font-size: 15px;
+        }
+
+        .synopsis {}
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="header">
+            <h1>Movie Details @ GV Cinema</h1>
+        </div>
+        <div class="back-button-division">
+            <button class="back-button" onclick="goToListing()">Back</button>
+        </div>
+        <div class="movie-detail-title">
+            <h2>{{ movie.name }}</h2>
+            <h4 class="mpaa-rating">({{ movie.type }}: {{ movie.label }})</h4>
+        </div>
+        <div class="movie-detail-isi">
+            <div class="image-division">
+                <!-- <img class="image" src="..\{{ movie.imgPath }}" alt="{{ movie.name }}"> -->
+                <img class="image" src="{% static movie.imgPath %}" alt="{{ movie.name }}">
+            </div>
+            <div class="detail">
+                <div>
+                    <h3>Details</h3>
+                    <h4>Genre: {{ movie.genre|slice:"1:-1"|cut:"'" }}</h4>
+                    <h4>Language: {{ movie.language }}</h4>
+                    <h4>Duration: {{ movie.duration }} minutes</h4>
+                    <h4>User Rating: {{ movie.userRating }}</h4>
+                    <br>
+                </div>
+                <div class="synopsis">
+                    <h3>Synopsis</h3>
+                    <h4>{{ movie.description }}</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>
